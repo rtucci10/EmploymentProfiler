@@ -1,0 +1,209 @@
+<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ include file="EF.Utility.CS.ttinclude"#>
+<#@ import namespace="System.IO" #>
+<#@ output extension=".cs" #>
+<# 		
+if(Errors.HasErrors)
+{
+    return String.Empty;
+}
+
+CodeGenerationTools code = new CodeGenerationTools(this){FullyQualifySystemTypes = true, CamelCaseFields = false};
+MetadataLoader loader = new MetadataLoader(this);
+
+string open = "<";
+string close = ">";
+string SourceCsdlPath = FindEDMXFileName();
+ReferenceCsdlPaths = new string[] {};
+string namespaceName = code.VsNamespaceSuggestion();
+ItemCollection = loader.CreateEdmItemCollection(SourceCsdlPath, ReferenceCsdlPaths.ToArray());
+EntityContainer container = ItemCollection.GetItems<EntityContainer>().FirstOrDefault();
+#>
+using System;
+using System.Collections.Generic;
+using System.Data.Objects;
+using System.Linq;
+using System.Text;
+using System.Linq.Expressions;
+
+namespace <#=namespaceName#>
+{
+    public interface IRepository<T> where T : class
+    {    
+		#region	Methods
+	
+        T GetById(int id);
+        IEnumerable<T> GetAll();
+        IEnumerable<T> Query(Expression<Func<T, bool>> filter);        
+        void Add(T entity);
+        void Remove(T entity);   
+		
+		#endregion
+    }
+	
+	public abstract class Repository<T> : IRepository<T>
+                                  where T : class
+    {
+    	#region Members
+
+    	protected IObjectSet<T> _objectSet;
+
+    	#endregion
+
+    	#region Ctor
+
+    	public Repository(ObjectContext context)
+    	{
+      		_objectSet = context.CreateObjectSet<T>();
+    	}
+
+    	#endregion
+
+    	#region IRepository<T> Members
+
+    	public IEnumerable<T> GetAll()
+    	{
+      		return _objectSet;
+    	}
+
+    	public abstract T GetById(int id);
+
+    	public IEnumerable<T> Query(Expression<Func<T, bool>> filter)
+    	{
+      		return _objectSet.Where(filter);
+    	}
+
+    	public void Add(T entity)
+    	{
+     	 	_objectSet.AddObject(entity);
+    	}
+
+    	public void Remove(T entity)
+    	{
+      		_objectSet.DeleteObject(entity);
+    	}
+
+    	#endregion
+  	}
+
+<#
+	foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e => e.Name))
+    {		
+#>
+	
+	public partial class <#= entity.Name #>Repository : Repository<#=open#><#=entity.Name#><#=close#>
+	{
+		#region Ctor
+
+		public <#= entity.Name #>Repository(ObjectContext context)
+   			: base(context)
+		{
+		}
+
+		#endregion
+
+		#region Methods
+ 
+		public override <#= entity.Name #> GetById(int id)   
+		{
+			return _objectSet.SingleOrDefault(e => e.<#= entity.KeyMembers.First().Name #> == id);
+		}
+
+		#endregion		
+	}
+<# 
+	}		
+#>
+		
+  public interface IUnitOfWork
+  {
+  	#region	Methods
+	
+	<#
+        foreach (EntitySet set in container.BaseEntitySets.OfType<EntitySet>())
+        {	
+	#>
+		IRepository<#= open #><#= set.ElementType.Name #><#= close #> <#= set.Name #> { get; }   
+	<# 
+		}
+	#>
+    void Commit();
+	
+	#endregion
+  }
+
+  public partial class UnitOfWork : IUnitOfWork
+  {
+    #region Members
+
+    private readonly ObjectContext _context;
+	<#
+        foreach (EntitySet set in container.BaseEntitySets.OfType<EntitySet>())
+        {	
+	#>
+	private <#= set.ElementType.Name #>Repository _<#= set.Name.ToLower() #>;
+	<# 
+		}
+	#>    
+    #endregion
+
+    #region Ctor
+
+    public UnitOfWork(ObjectContext context)
+    {
+      if (context == null)
+      {
+        throw new ArgumentNullException("context wasn't supplied");
+      }
+
+      _context = context;
+    }
+
+    #endregion
+
+    #region IUnitOfWork Members
+
+	<#
+        foreach (EntitySet set in container.BaseEntitySets.OfType<EntitySet>())
+        {	
+	#>
+	public IRepository<#= open #><#= set.ElementType.Name #><#= close #> <#= set.Name #>
+	{
+		get
+		{
+			if (_<#= set.Name.ToLower() #> == null)
+			{
+				_<#= set.Name.ToLower() #> = new <#= set.ElementType.Name #>Repository(_context);
+			}
+			return _<#= set.Name.ToLower() #>;
+		}
+	}
+	<# 
+		}
+	#>    
+	
+    public void Commit()
+    {
+      _context.SaveChanges();
+    }
+
+    #endregion
+  }
+}
+<#+
+public string SourceCsdlPath{ get; set; }
+public EdmItemCollection ItemCollection{ get; set; }
+public IEnumerable<string> ReferenceCsdlPaths{ get; set; }
+
+string FindEDMXFileName()
+{			
+	string[] entityFrameworkFiles = 
+		Directory.GetFiles(Host.ResolvePath(string.Empty), "*.edmx");
+	if(entityFrameworkFiles.Length > 0)
+	{
+		return entityFrameworkFiles[0];
+	}
+	
+	return string.Empty;
+}
+#>

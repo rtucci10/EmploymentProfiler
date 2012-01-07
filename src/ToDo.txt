@@ -1,1 +1,26 @@
-Modify EmploymentProfilerModel.tt to autogenerate a private context field so changes can actually be applied
+Modify EmploymentProfilerModel.tt
+    -Autogenerate a private context field so changes can actually be applied.
+    -Add parameterless constructor to all generated repositories to allow mock.
+
+        protected IObjectSet<T> _objectSet;
+        private ObjectContext _context;
+
+    	#endregion
+
+    	#region Ctor
+
+        public Repository(ObjectContext context)
+    	{
+            _context = context;
+            _objectSet = context.CreateObjectSet<T>();
+    	}
+
+        public Repository() 
+        {
+            _context = new EmploymentProfilerDB();
+            _objectSet = _context.CreateObjectSet<T>();
+        }
+
+        ...
+
+        public PersonRepository() { }

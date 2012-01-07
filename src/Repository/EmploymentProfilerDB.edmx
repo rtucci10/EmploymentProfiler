@@ -1,0 +1,646 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmploymentProfilerModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="EmploymentProfilerModelStoreContainer">
+          <EntitySet Name="Accomplishments" EntityType="EmploymentProfilerModel.Store.Accomplishments" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Address" EntityType="EmploymentProfilerModel.Store.Address" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Companies" EntityType="EmploymentProfilerModel.Store.Companies" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="People" EntityType="EmploymentProfilerModel.Store.People" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PersonAddress" EntityType="EmploymentProfilerModel.Store.PersonAddress" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PersonCompany" EntityType="EmploymentProfilerModel.Store.PersonCompany" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PersonSkill" EntityType="EmploymentProfilerModel.Store.PersonSkill" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PortfolioItems" EntityType="EmploymentProfilerModel.Store.PortfolioItems" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PortfolioItemTypes" EntityType="EmploymentProfilerModel.Store.PortfolioItemTypes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Skills" EntityType="EmploymentProfilerModel.Store.Skills" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SkillTypes" EntityType="EmploymentProfilerModel.Store.SkillTypes" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_PersonAccomplishment" Association="EmploymentProfilerModel.Store.FK_PersonAccomplishment">
+            <End Role="People" EntitySet="People" />
+            <End Role="Accomplishments" EntitySet="Accomplishments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonAddress_Address" Association="EmploymentProfilerModel.Store.FK_PersonAddress_Address">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="PersonAddress" EntitySet="PersonAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonAddress_Person" Association="EmploymentProfilerModel.Store.FK_PersonAddress_Person">
+            <End Role="People" EntitySet="People" />
+            <End Role="PersonAddress" EntitySet="PersonAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonCompany_Company" Association="EmploymentProfilerModel.Store.FK_PersonCompany_Company">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="PersonCompany" EntitySet="PersonCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonCompany_Person" Association="EmploymentProfilerModel.Store.FK_PersonCompany_Person">
+            <End Role="People" EntitySet="People" />
+            <End Role="PersonCompany" EntitySet="PersonCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonPortfolioItem" Association="EmploymentProfilerModel.Store.FK_PersonPortfolioItem">
+            <End Role="People" EntitySet="People" />
+            <End Role="PortfolioItems" EntitySet="PortfolioItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonSkill_Person" Association="EmploymentProfilerModel.Store.FK_PersonSkill_Person">
+            <End Role="People" EntitySet="People" />
+            <End Role="PersonSkill" EntitySet="PersonSkill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonSkill_Skill" Association="EmploymentProfilerModel.Store.FK_PersonSkill_Skill">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="PersonSkill" EntitySet="PersonSkill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PortfolioItemPortfolioItemType" Association="EmploymentProfilerModel.Store.FK_PortfolioItemPortfolioItemType">
+            <End Role="PortfolioItemTypes" EntitySet="PortfolioItemTypes" />
+            <End Role="PortfolioItems" EntitySet="PortfolioItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SkillSkillType" Association="EmploymentProfilerModel.Store.FK_SkillSkillType">
+            <End Role="SkillTypes" EntitySet="SkillTypes" />
+            <End Role="Skills" EntitySet="Skills" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Accomplishments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CompanyId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Street" Type="varchar" MaxLength="50" />
+          <Property Name="Line1" Type="varchar" MaxLength="50" />
+          <Property Name="Line2" Type="varchar" MaxLength="50" />
+          <Property Name="Line3" Type="varchar" MaxLength="50" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
+          <Property Name="State" Type="varchar" MaxLength="2" />
+          <Property Name="Zip" Type="int" />
+        </EntityType>
+        <EntityType Name="Companies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Age" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PersonAddress">
+          <Key>
+            <PropertyRef Name="People_Id" />
+            <PropertyRef Name="Address_Id" />
+          </Key>
+          <Property Name="People_Id" Type="int" Nullable="false" />
+          <Property Name="Address_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PersonCompany">
+          <Key>
+            <PropertyRef Name="People_Id" />
+            <PropertyRef Name="Companies_Id" />
+          </Key>
+          <Property Name="People_Id" Type="int" Nullable="false" />
+          <Property Name="Companies_Id" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime2" />
+          <Property Name="EndDate" Type="datetime2" />
+        </EntityType>
+        <EntityType Name="PersonSkill">
+          <Key>
+            <PropertyRef Name="People_Id" />
+            <PropertyRef Name="Skills_Id" />
+          </Key>
+          <Property Name="People_Id" Type="int" Nullable="false" />
+          <Property Name="Skills_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PortfolioItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Url" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="PortfolioItemType_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PortfolioItemTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Skills">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SkillType_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SkillTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="FK_PersonAccomplishment">
+          <End Role="People" Type="EmploymentProfilerModel.Store.People" Multiplicity="1" />
+          <End Role="Accomplishments" Type="EmploymentProfilerModel.Store.Accomplishments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accomplishments">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonAddress_Address">
+          <End Role="Address" Type="EmploymentProfilerModel.Store.Address" Multiplicity="1" />
+          <End Role="PersonAddress" Type="EmploymentProfilerModel.Store.PersonAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonAddress">
+              <PropertyRef Name="Address_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonAddress_Person">
+          <End Role="People" Type="EmploymentProfilerModel.Store.People" Multiplicity="1" />
+          <End Role="PersonAddress" Type="EmploymentProfilerModel.Store.PersonAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonAddress">
+              <PropertyRef Name="People_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonCompany_Company">
+          <End Role="Companies" Type="EmploymentProfilerModel.Store.Companies" Multiplicity="1" />
+          <End Role="PersonCompany" Type="EmploymentProfilerModel.Store.PersonCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonCompany">
+              <PropertyRef Name="Companies_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonCompany_Person">
+          <End Role="People" Type="EmploymentProfilerModel.Store.People" Multiplicity="1" />
+          <End Role="PersonCompany" Type="EmploymentProfilerModel.Store.PersonCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonCompany">
+              <PropertyRef Name="People_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonPortfolioItem">
+          <End Role="People" Type="EmploymentProfilerModel.Store.People" Multiplicity="1" />
+          <End Role="PortfolioItems" Type="EmploymentProfilerModel.Store.PortfolioItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PortfolioItems">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonSkill_Person">
+          <End Role="People" Type="EmploymentProfilerModel.Store.People" Multiplicity="1" />
+          <End Role="PersonSkill" Type="EmploymentProfilerModel.Store.PersonSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonSkill">
+              <PropertyRef Name="People_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonSkill_Skill">
+          <End Role="Skills" Type="EmploymentProfilerModel.Store.Skills" Multiplicity="1" />
+          <End Role="PersonSkill" Type="EmploymentProfilerModel.Store.PersonSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonSkill">
+              <PropertyRef Name="Skills_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PortfolioItemPortfolioItemType">
+          <End Role="PortfolioItemTypes" Type="EmploymentProfilerModel.Store.PortfolioItemTypes" Multiplicity="1" />
+          <End Role="PortfolioItems" Type="EmploymentProfilerModel.Store.PortfolioItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PortfolioItemTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PortfolioItems">
+              <PropertyRef Name="PortfolioItemType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SkillSkillType">
+          <End Role="SkillTypes" Type="EmploymentProfilerModel.Store.SkillTypes" Multiplicity="1" />
+          <End Role="Skills" Type="EmploymentProfilerModel.Store.Skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SkillTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Skills">
+              <PropertyRef Name="SkillType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmploymentProfilerModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="EmploymentProfilerDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accomplishments" EntityType="EmploymentProfilerModel.Accomplishment" />
+          <EntitySet Name="Addresses" EntityType="EmploymentProfilerModel.Address" />
+          <EntitySet Name="Companies" EntityType="EmploymentProfilerModel.Company" />
+          <EntitySet Name="People" EntityType="EmploymentProfilerModel.Person" />
+          <EntitySet Name="PersonCompanies" EntityType="EmploymentProfilerModel.PersonCompany" />
+          <EntitySet Name="PortfolioItems" EntityType="EmploymentProfilerModel.PortfolioItem" />
+          <EntitySet Name="PortfolioItemTypes" EntityType="EmploymentProfilerModel.PortfolioItemType" />
+          <EntitySet Name="Skills" EntityType="EmploymentProfilerModel.Skill" />
+          <EntitySet Name="SkillTypes" EntityType="EmploymentProfilerModel.SkillType" />
+          <AssociationSet Name="FK_PersonAccomplishment" Association="EmploymentProfilerModel.FK_PersonAccomplishment">
+            <End Role="People" EntitySet="People" />
+            <End Role="Accomplishments" EntitySet="Accomplishments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonCompany_Company" Association="EmploymentProfilerModel.FK_PersonCompany_Company">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="PersonCompany" EntitySet="PersonCompanies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonCompany_Person" Association="EmploymentProfilerModel.FK_PersonCompany_Person">
+            <End Role="People" EntitySet="People" />
+            <End Role="PersonCompany" EntitySet="PersonCompanies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonPortfolioItem" Association="EmploymentProfilerModel.FK_PersonPortfolioItem">
+            <End Role="People" EntitySet="People" />
+            <End Role="PortfolioItems" EntitySet="PortfolioItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PortfolioItemPortfolioItemType" Association="EmploymentProfilerModel.FK_PortfolioItemPortfolioItemType">
+            <End Role="PortfolioItemTypes" EntitySet="PortfolioItemTypes" />
+            <End Role="PortfolioItems" EntitySet="PortfolioItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SkillSkillType" Association="EmploymentProfilerModel.FK_SkillSkillType">
+            <End Role="SkillTypes" EntitySet="SkillTypes" />
+            <End Role="Skills" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="PersonAddress" Association="EmploymentProfilerModel.PersonAddress">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="PersonSkill" Association="EmploymentProfilerModel.PersonSkill">
+            <End Role="People" EntitySet="People" />
+            <End Role="Skills" EntitySet="Skills" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Accomplishment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CompanyId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="EmploymentProfilerModel.FK_PersonAccomplishment" FromRole="Accomplishments" ToRole="People" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Street" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Line1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Line2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Line3" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="State" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="Zip" Type="Int32" />
+          <NavigationProperty Name="People" Relationship="EmploymentProfilerModel.PersonAddress" FromRole="Address" ToRole="People" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="PersonCompanies" Relationship="EmploymentProfilerModel.FK_PersonCompany_Company" FromRole="Companies" ToRole="PersonCompany" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Age" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Accomplishments" Relationship="EmploymentProfilerModel.FK_PersonAccomplishment" FromRole="People" ToRole="Accomplishments" />
+          <NavigationProperty Name="PersonCompanies" Relationship="EmploymentProfilerModel.FK_PersonCompany_Person" FromRole="People" ToRole="PersonCompany" />
+          <NavigationProperty Name="PortfolioItems" Relationship="EmploymentProfilerModel.FK_PersonPortfolioItem" FromRole="People" ToRole="PortfolioItems" />
+          <NavigationProperty Name="Addresses" Relationship="EmploymentProfilerModel.PersonAddress" FromRole="People" ToRole="Address" />
+          <NavigationProperty Name="Skills" Relationship="EmploymentProfilerModel.PersonSkill" FromRole="People" ToRole="Skills" />
+        </EntityType>
+        <EntityType Name="PersonCompany">
+          <Key>
+            <PropertyRef Name="People_Id" />
+            <PropertyRef Name="Companies_Id" />
+          </Key>
+          <Property Name="People_Id" Type="Int32" Nullable="false" />
+          <Property Name="Companies_Id" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" />
+          <Property Name="EndDate" Type="DateTime" />
+          <NavigationProperty Name="Company" Relationship="EmploymentProfilerModel.FK_PersonCompany_Company" FromRole="PersonCompany" ToRole="Companies" />
+          <NavigationProperty Name="Person" Relationship="EmploymentProfilerModel.FK_PersonCompany_Person" FromRole="PersonCompany" ToRole="People" />
+        </EntityType>
+        <EntityType Name="PortfolioItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="PortfolioItemType_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="EmploymentProfilerModel.FK_PersonPortfolioItem" FromRole="PortfolioItems" ToRole="People" />
+          <NavigationProperty Name="PortfolioItemType" Relationship="EmploymentProfilerModel.FK_PortfolioItemPortfolioItemType" FromRole="PortfolioItems" ToRole="PortfolioItemTypes" />
+        </EntityType>
+        <EntityType Name="PortfolioItemType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="PortfolioItems" Relationship="EmploymentProfilerModel.FK_PortfolioItemPortfolioItemType" FromRole="PortfolioItemTypes" ToRole="PortfolioItems" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SkillType_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SkillType" Relationship="EmploymentProfilerModel.FK_SkillSkillType" FromRole="Skills" ToRole="SkillTypes" />
+          <NavigationProperty Name="People" Relationship="EmploymentProfilerModel.PersonSkill" FromRole="Skills" ToRole="People" />
+        </EntityType>
+        <EntityType Name="SkillType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Skills" Relationship="EmploymentProfilerModel.FK_SkillSkillType" FromRole="SkillTypes" ToRole="Skills" />
+        </EntityType>
+        <Association Name="FK_PersonAccomplishment">
+          <End Role="People" Type="EmploymentProfilerModel.Person" Multiplicity="1" />
+          <End Role="Accomplishments" Type="EmploymentProfilerModel.Accomplishment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accomplishments">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonCompany_Company">
+          <End Role="Companies" Type="EmploymentProfilerModel.Company" Multiplicity="1" />
+          <End Role="PersonCompany" Type="EmploymentProfilerModel.PersonCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonCompany">
+              <PropertyRef Name="Companies_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonCompany_Person">
+          <End Role="People" Type="EmploymentProfilerModel.Person" Multiplicity="1" />
+          <End Role="PersonCompany" Type="EmploymentProfilerModel.PersonCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonCompany">
+              <PropertyRef Name="People_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonPortfolioItem">
+          <End Role="People" Type="EmploymentProfilerModel.Person" Multiplicity="1" />
+          <End Role="PortfolioItems" Type="EmploymentProfilerModel.PortfolioItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PortfolioItems">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PortfolioItemPortfolioItemType">
+          <End Role="PortfolioItemTypes" Type="EmploymentProfilerModel.PortfolioItemType" Multiplicity="1" />
+          <End Role="PortfolioItems" Type="EmploymentProfilerModel.PortfolioItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PortfolioItemTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PortfolioItems">
+              <PropertyRef Name="PortfolioItemType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SkillSkillType">
+          <End Role="SkillTypes" Type="EmploymentProfilerModel.SkillType" Multiplicity="1" />
+          <End Role="Skills" Type="EmploymentProfilerModel.Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SkillTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Skills">
+              <PropertyRef Name="SkillType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PersonAddress">
+          <End Role="Address" Type="EmploymentProfilerModel.Address" Multiplicity="*" />
+          <End Role="People" Type="EmploymentProfilerModel.Person" Multiplicity="*" />
+        </Association>
+        <Association Name="PersonSkill">
+          <End Role="People" Type="EmploymentProfilerModel.Person" Multiplicity="*" />
+          <End Role="Skills" Type="EmploymentProfilerModel.Skill" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmploymentProfilerModelStoreContainer" CdmEntityContainer="EmploymentProfilerDB">
+          <EntitySetMapping Name="Accomplishments"><EntityTypeMapping TypeName="EmploymentProfilerModel.Accomplishment"><MappingFragment StoreEntitySet="Accomplishments">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+            <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Addresses"><EntityTypeMapping TypeName="EmploymentProfilerModel.Address"><MappingFragment StoreEntitySet="Address">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Street" ColumnName="Street" />
+            <ScalarProperty Name="Line1" ColumnName="Line1" />
+            <ScalarProperty Name="Line2" ColumnName="Line2" />
+            <ScalarProperty Name="Line3" ColumnName="Line3" />
+            <ScalarProperty Name="City" ColumnName="City" />
+            <ScalarProperty Name="State" ColumnName="State" />
+            <ScalarProperty Name="Zip" ColumnName="Zip" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Companies"><EntityTypeMapping TypeName="EmploymentProfilerModel.Company"><MappingFragment StoreEntitySet="Companies">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="People"><EntityTypeMapping TypeName="EmploymentProfilerModel.Person"><MappingFragment StoreEntitySet="People">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="LastName" ColumnName="LastName" />
+            <ScalarProperty Name="Age" ColumnName="Age" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PersonCompanies"><EntityTypeMapping TypeName="EmploymentProfilerModel.PersonCompany"><MappingFragment StoreEntitySet="PersonCompany">
+            <ScalarProperty Name="People_Id" ColumnName="People_Id" />
+            <ScalarProperty Name="Companies_Id" ColumnName="Companies_Id" />
+            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PortfolioItems"><EntityTypeMapping TypeName="EmploymentProfilerModel.PortfolioItem"><MappingFragment StoreEntitySet="PortfolioItems">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Url" ColumnName="Url" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+            <ScalarProperty Name="PortfolioItemType_Id" ColumnName="PortfolioItemType_Id" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PortfolioItemTypes"><EntityTypeMapping TypeName="EmploymentProfilerModel.PortfolioItemType"><MappingFragment StoreEntitySet="PortfolioItemTypes">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Skills"><EntityTypeMapping TypeName="EmploymentProfilerModel.Skill"><MappingFragment StoreEntitySet="Skills">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="SkillType_Id" ColumnName="SkillType_Id" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SkillTypes"><EntityTypeMapping TypeName="EmploymentProfilerModel.SkillType"><MappingFragment StoreEntitySet="SkillTypes">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="PersonAddress" TypeName="EmploymentProfilerModel.PersonAddress" StoreEntitySet="PersonAddress">
+            <EndProperty Name="Address">
+              <ScalarProperty Name="Id" ColumnName="Address_Id" />
+            </EndProperty>
+            <EndProperty Name="People">
+              <ScalarProperty Name="Id" ColumnName="People_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PersonSkill" TypeName="EmploymentProfilerModel.PersonSkill" StoreEntitySet="PersonSkill">
+            <EndProperty Name="People">
+              <ScalarProperty Name="Id" ColumnName="People_Id" />
+            </EndProperty>
+            <EndProperty Name="Skills">
+              <ScalarProperty Name="Id" ColumnName="Skills_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="EmploymentProfilerDB">
+        <EntityTypeShape EntityType="EmploymentProfilerModel.Accomplishment" Width="1.5" PointX="5.25" PointY="6.5" Height="1.9802864583333326" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmploymentProfilerModel.Address" Width="1.5" PointX="0.75" PointY="6.125" Height="2.7494921874999987" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmploymentProfilerModel.Company" Width="1.5" PointX="3" PointY="3.625" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmploymentProfilerModel.Person" Width="1.5" PointX="3" PointY="6.125" Height="2.7494921874999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmploymentProfilerModel.PersonCompany" Width="1.5" PointX="5.25" PointY="3.375" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmploymentProfilerModel.PortfolioItem" Width="1.5" PointX="5.25" PointY="9.125" Height="2.5571907552083317" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmploymentProfilerModel.PortfolioItemType" Width="1.5" PointX="3" PointY="10.5" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmploymentProfilerModel.Skill" Width="1.5" PointX="8.25" PointY="6.5" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmploymentProfilerModel.SkillType" Width="1.5" PointX="6" PointY="0.75" Height="1.4033821614583317" IsExpanded="true" />
+        <AssociationConnector Association="EmploymentProfilerModel.FK_PersonAccomplishment" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="7.4901432291666659" />
+          <ConnectorPoint PointX="5.25" PointY="7.4901432291666659" />
+        </AssociationConnector>
+        <AssociationConnector Association="EmploymentProfilerModel.FK_PersonCompany_Company" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="4.422841796875" />
+          <ConnectorPoint PointX="5.25" PointY="4.422841796875" />
+        </AssociationConnector>
+        <AssociationConnector Association="EmploymentProfilerModel.FK_PersonCompany_Person" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="6.125" />
+          <ConnectorPoint PointX="4.875" PointY="5.75" />
+          <ConnectorPoint PointX="4.875" PointY="5.922587890625" />
+          <ConnectorPoint PointX="5.25" PointY="5.547587890625" />
+        </AssociationConnector>
+        <AssociationConnector Association="EmploymentProfilerModel.FK_PersonPortfolioItem" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="8.8744921875" />
+          <ConnectorPoint PointX="4.875" PointY="9.2494921875" />
+          <ConnectorPoint PointX="4.875" PointY="8.7488471538461532" />
+          <ConnectorPoint PointX="5.2511528461538459" PointY="9.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="EmploymentProfilerModel.FK_PortfolioItemPortfolioItemType" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="11.091095377604166" />
+          <ConnectorPoint PointX="5.25" PointY="11.091095377604166" />
+        </AssociationConnector>
+        <AssociationConnector Association="EmploymentProfilerModel.FK_SkillSkillType" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="1.4516910807291659" />
+          <ConnectorPoint PointX="9" PointY="1.4516910807291659" />
+          <ConnectorPoint PointX="9" PointY="6.5" />
+        </AssociationConnector>
+        <AssociationConnector Association="EmploymentProfilerModel.PersonAddress" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="7.49974609375" />
+          <ConnectorPoint PointX="3" PointY="7.49974609375" />
+        </AssociationConnector>
+        <AssociationConnector Association="EmploymentProfilerModel.PersonSkill" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="8.6773868229166649" />
+          <ConnectorPoint PointX="9" PointY="8.6773868229166649" />
+          <ConnectorPoint PointX="9" PointY="8.2879850260416674" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
