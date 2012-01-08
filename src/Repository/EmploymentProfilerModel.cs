@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Data.Objects;
@@ -27,19 +27,19 @@ namespace RS.EmploymentProfiler.Repository
     	#region Members
 
     	protected IObjectSet<T> _objectSet;
-        private ObjectContext _context;
+		private ObjectContext _context;
 
     	#endregion
 
     	#region Ctor
 
-        public Repository(ObjectContext context)
+    	public Repository(ObjectContext context)
     	{
-            _context = context;
-            _objectSet = context.CreateObjectSet<T>();
+      		_context = context;
+			_objectSet = context.CreateObjectSet<T>();			
     	}
-
-        public Repository() 
+		
+		public Repository() 
         {
             _context = new EmploymentProfilerDB();
             _objectSet = _context.CreateObjectSet<T>();
@@ -63,10 +63,9 @@ namespace RS.EmploymentProfiler.Repository
 
     	public T Add(T entity)
     	{
-     	 	//_objectSet.AddObject(entity);           
-            _objectSet.AddObject(entity);
+     	 	_objectSet.AddObject(entity);
             _context.SaveChanges();
-            return entity;
+            return entity;			
     	}
 
     	public void Remove(T entity)
@@ -86,6 +85,8 @@ namespace RS.EmploymentProfiler.Repository
    			: base(context)
 		{
 		}
+		
+		public AccomplishmentRepository() { }
 
 		#endregion
 
@@ -107,6 +108,8 @@ namespace RS.EmploymentProfiler.Repository
    			: base(context)
 		{
 		}
+		
+		public AddressRepository() { }
 
 		#endregion
 
@@ -128,6 +131,8 @@ namespace RS.EmploymentProfiler.Repository
    			: base(context)
 		{
 		}
+		
+		public CompanyRepository() { }
 
 		#endregion
 
@@ -149,9 +154,9 @@ namespace RS.EmploymentProfiler.Repository
    			: base(context)
 		{
 		}
+		
+		public PersonRepository() { }
 
-        public PersonRepository() { }
-        
 		#endregion
 
 		#region Methods
@@ -172,6 +177,8 @@ namespace RS.EmploymentProfiler.Repository
    			: base(context)
 		{
 		}
+		
+		public PersonCompanyRepository() { }
 
 		#endregion
 
@@ -193,6 +200,8 @@ namespace RS.EmploymentProfiler.Repository
    			: base(context)
 		{
 		}
+		
+		public PortfolioItemRepository() { }
 
 		#endregion
 
@@ -214,6 +223,8 @@ namespace RS.EmploymentProfiler.Repository
    			: base(context)
 		{
 		}
+		
+		public PortfolioItemTypeRepository() { }
 
 		#endregion
 
@@ -235,6 +246,8 @@ namespace RS.EmploymentProfiler.Repository
    			: base(context)
 		{
 		}
+		
+		public SkillRepository() { }
 
 		#endregion
 
@@ -256,6 +269,8 @@ namespace RS.EmploymentProfiler.Repository
    			: base(context)
 		{
 		}
+		
+		public SkillTypeRepository() { }
 
 		#endregion
 

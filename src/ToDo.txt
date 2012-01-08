@@ -1,27 +1,6 @@
 Modify EmploymentProfilerModel.tt
-    -Autogenerate a private context field so changes can actually be applied.
-    -Add parameterless constructor to all generated repositories to allow mock.
+   -Create separate repository files from T4 generation
+   -Create repository factory to allow other underlying ORM like nHibernate
 
-        protected IObjectSet<T> _objectSet;
-        private ObjectContext _context;
-
-    	#endregion
-
-    	#region Ctor
-
-        public Repository(ObjectContext context)
-    	{
-            _context = context;
-            _objectSet = context.CreateObjectSet<T>();
-    	}
-
-        public Repository() 
-        {
-            _context = new EmploymentProfilerDB();
-            _objectSet = _context.CreateObjectSet<T>();
-        }
-
-        ...
-
-        public PersonRepository() { }
-        test
+Create MVC web application
+Create thin communication layer between client and server = WCF

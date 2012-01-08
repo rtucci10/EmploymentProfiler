@@ -1,4 +1,4 @@
-<#@ template debug="true" hostspecific="true" language="C#" #>
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
 <#@ include file="EF.Utility.CS.ttinclude"#>
 <#@ import namespace="System.IO" #>
 <#@ output extension=".cs" #>
@@ -35,7 +35,7 @@ namespace <#=namespaceName#>
         T GetById(int id);
         IEnumerable<T> GetAll();
         IEnumerable<T> Query(Expression<Func<T, bool>> filter);        
-        void Add(T entity);
+        T Add(T entity);
         void Remove(T entity);   
 		
 		#endregion
@@ -47,6 +47,7 @@ namespace <#=namespaceName#>
     	#region Members
 
     	protected IObjectSet<T> _objectSet;
+		private ObjectContext _context;
 
     	#endregion
 
@@ -54,8 +55,15 @@ namespace <#=namespaceName#>
 
     	public Repository(ObjectContext context)
     	{
-      		_objectSet = context.CreateObjectSet<T>();
+      		_context = context;
+			_objectSet = context.CreateObjectSet<T>();			
     	}
+		
+		public Repository() 
+        {
+            _context = new EmploymentProfilerDB();
+            _objectSet = _context.CreateObjectSet<T>();
+        }
 
     	#endregion
 
@@ -73,9 +81,11 @@ namespace <#=namespaceName#>
       		return _objectSet.Where(filter);
     	}
 
-    	public void Add(T entity)
+    	public T Add(T entity)
     	{
      	 	_objectSet.AddObject(entity);
+            _context.SaveChanges();
+            return entity;			
     	}
 
     	public void Remove(T entity)
@@ -99,6 +109,8 @@ namespace <#=namespaceName#>
    			: base(context)
 		{
 		}
+		
+		public <#= entity.Name #>Repository() { }
 
 		#endregion
 

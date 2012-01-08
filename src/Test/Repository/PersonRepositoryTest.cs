@@ -35,8 +35,7 @@ namespace RS.EmploymentProfiler.Test
         {
             var person = Person.CreatePerson(-1, "Test First", "Test Last", 21);
 
-            // Act
-            //var result = mockRepository.Object.Add(person);
+            // Act            
             PersonRepository target = new PersonRepository(context);
             var result = target.Add(person);
 
@@ -56,17 +55,7 @@ namespace RS.EmploymentProfiler.Test
             Assert.AreEqual(person, result);
         }
 
-        /// <summary>
-        ///A test for PersonRepository Constructor
-        ///</summary>
-        [TestMethod()]
-        public void PersonRepositoryConstructorTest()
-        {
-            ObjectContext context = null; // TODO: Initialize to an appropriate value
-            PersonRepository target = new PersonRepository(context);
-            Assert.Inconclusive("TODO: Implement code to verify target");
-        }
-
+       /*
         /// <summary>
         ///A test for GetById
         ///</summary>
@@ -82,5 +71,6 @@ namespace RS.EmploymentProfiler.Test
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
+        */
     }
 }
